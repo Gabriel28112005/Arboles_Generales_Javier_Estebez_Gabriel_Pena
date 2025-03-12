@@ -113,17 +113,39 @@ public class ArbolGeneral {
             } catch (Exception e) {
             }
         }
-
     }
 
+    public int gradoArbol() {
+        return gradoNodo(raiz);
+    }
 
+    private int gradoNodo(NodoGeneral node) {
+        if (node == null) {
+            return 0;
+        }
 
+        int maxGrade = 0;
+        int childrenCounter = 0;
+        NodoGeneral aux = node.primerHijo;
 
+        // Contar el número de hijos del nodo actual
+        while (aux != null) {
+            ++childrenCounter;
+            aux = aux.hermano;
+        }
 
+        // Verificar si este nodo tiene más hijos que el grado máximo encontrado
+        maxGrade = Math.max(maxGrade, childrenCounter);
 
-    
-    
-    
+        // Recorrer todos los hijos y calcular el grado de sus subárboles
+        aux = node.primerHijo;
+        while (aux != null) {
+            maxGrade = Math.max(maxGrade, gradoNodo(aux));
+            aux = aux.hermano;
+        }
+
+        return maxGrade;
+    }
 
     public static void main(String[] args) {
         NodoGeneral n = new NodoGeneral(1);
@@ -132,31 +154,35 @@ public class ArbolGeneral {
         ArbolGeneral b = new ArbolGeneral(n);
         n = new NodoGeneral(3);
         ArbolGeneral c = new ArbolGeneral(n);
-        n = new NodoGeneral(-4);
+        n = new NodoGeneral(4);
         ArbolGeneral d = new ArbolGeneral(n);
-        ArbolGeneral e = new ArbolGeneral(new NodoGeneral(2));
-        ArbolGeneral f = new ArbolGeneral(new NodoGeneral(43));
-        ArbolGeneral g = new ArbolGeneral(new NodoGeneral(1));
-        ArbolGeneral h = new ArbolGeneral(new NodoGeneral(-3));
-        ArbolGeneral i = new ArbolGeneral(new NodoGeneral(54));
+        ArbolGeneral e = new ArbolGeneral(new NodoGeneral(5));
+        ArbolGeneral f = new ArbolGeneral(new NodoGeneral(6));
+        ArbolGeneral g = new ArbolGeneral(new NodoGeneral(7));
+        ArbolGeneral h = new ArbolGeneral(new NodoGeneral(8));
+        ArbolGeneral i = new ArbolGeneral(new NodoGeneral(9));
         try {
-            c.añadirHijo(new NodoGeneral(-8));
-            a.añadirHijo(c.raiz());
-            a.añadirHijo(b.raiz());
-            b.añadirHijo(d.raiz());
-            c.añadirHijo(new NodoGeneral(5));
-            e.añadirHijo(a.raiz());
-            b.añadirHijo(f.raiz());
-            b.añadirHijo(g.raiz());
-            b.añadirHijo(h.raiz());
-            b.añadirHijo(i.raiz());
-//	    	a.primerHijo().hermano()
+            a.añadirHijo(c.raiz());            // 1 -> 3
+            a.añadirHijo(b.raiz());            // 1 -> 3, 2
+
+            c.añadirHijo(new NodoGeneral(10)); // 3 -> 10
+            c.añadirHijo(new NodoGeneral(11)); // 3 -> 10, 11
+
+            b.añadirHijo(d.raiz());            // 2 -> 4
+            b.añadirHijo(f.raiz());            // 2 -> 4, 6
+            b.añadirHijo(g.raiz());            // 2 -> 4, 6, 7
+            b.añadirHijo(h.raiz());            // 2 -> 4, 6, 7, 8
+            b.añadirHijo(i.raiz());            // 2 -> 4, 6, 7, 8, 9
+
+            e.añadirHijo(a.raiz());            // 5 -> 1
+
+
             System.out.println("arbol");
             e.pintaArbol(0);
-            
-            
-            e.eliminar(c);
-            e.pintaArbol(0);
+
+            System.out.println("El grado del arbol es: " + e.gradoArbol());
+            //e.eliminar(c);
+            //e.pintaArbol(0);
 
         } catch (Exception exc) {
         }

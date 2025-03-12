@@ -21,7 +21,7 @@ public class main_Ejercicio {
 
         try{
 
-            NumeroNodos(arbolA);
+            //NumeroNodos(arbolA);
 
 
 
@@ -63,7 +63,7 @@ public class main_Ejercicio {
         if (nodo.dato != null){
 
             try{
-                int altura = 1 + nodo.izq + nodo.der;
+             //   int altura = 1 + nodo.izq + nodo.der;
 
             }catch (Exception e){
                 System.out.print("Error de número de nodos");
